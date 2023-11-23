@@ -1,0 +1,36 @@
+﻿@page
+@using DatabaseEntityLib;
+@model StudentskaSluzba.Pages.StudentsModel
+@{
+    ViewData["Title"] = "Studenti";
+}
+
+<div class="row">
+    <h1 class="display-2">Studenti</h1>
+    <form method="post">
+        <input type="text" asp-for="SearchText">
+        <input type="submit" value="Search">
+    </form>
+
+    <table class="table">
+        <thead class="thead-inverse">
+            <tr>
+                <th> <a class="btn-outline-dark" asp-page-handler="SortByID">Broj indeksa</a> </th>
+                <th> <a class="btn-outline-dark" asp-page-handler="SortByName">Ime</a> </th>
+                <th> <a class="btn-outline-dark" asp-page-handler="SortBySurname">Prezime</a> </th>
+                <th> <a class="btn-outline-dark" asp-page-handler="SortByBirthday">Datum rodjenja</a> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Student s in Model.Students)
+            {
+                <tr><th>@s.ID</th><th>@s.Name</th><th>@s.Surname</th><th>@s.DateOfBirth</th></tr>
+            }
+        </tbody>
+    </table>
+
+    <!--form method="post">
+        <!--input type="submit" value="Sortiraj po imenu" asp-page-handler="SortByName">
+        <!--input type="submit" value="Sortiraj po prezimenu" asp-page-handler="SortBySurname">
+    </!--form>
+</div>
