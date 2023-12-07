@@ -13,5 +13,6 @@ namespace DatabaseEntityLib
         public string Surname { get; set; }
         public DateTime DateOfBirth { get; set; }
         public ICollection<Prijava> IspitnePrijave { get; set; } = new List<Prijava>();
+        public string? Image { get; set; }
     }
 }

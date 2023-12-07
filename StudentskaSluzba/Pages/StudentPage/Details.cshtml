@@ -30,6 +30,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Student.DateOfBirth)
         </dd>
+        <dt class="col-sm-2">
+            @if (Model.Student.Image != null)
+            {
+                <img class="block" src="~/Images/@Model.Student.Image" alt="" width="500" height="auto" />
+            }
+        </dt>
     </dl>
 </div>
 <div>

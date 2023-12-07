@@ -8,21 +8,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataBaseContext;
 using DatabaseEntityLib;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting.Server;
+using System.IO;
 
 namespace StudentskaSluzba.Pages.StudentPage
 {
     public class EditModel : PageModel
     {
         private readonly DataBaseContext.DB_Context_Class _context;
+        private IWebHostEnvironment _environment;
 
-        public EditModel(DataBaseContext.DB_Context_Class context)
+        public EditModel(DataBaseContext.DB_Context_Class context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         [BindProperty]
         public Student Student { get; set; } = default!;
-
+        
+        [BindProperty]
+        public IFormFile Upload { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Student == null)
@@ -48,6 +55,13 @@ namespace StudentskaSluzba.Pages.StudentPage
                 return Page();
             }
 
+            var file = Path.Combine(_environment.ContentRootPath, "wwwroot\\images", Upload.FileName);
+            using (var fileStream = new FileStream(file, FileMode.Create))
+            {
+                await Upload.CopyToAsync(fileStream);
+
+                Student.Image = Upload.FileName;
+            }
             _context.Attach(Student).State = EntityState.Modified;
 
             try
