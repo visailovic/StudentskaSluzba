@@ -23,4 +23,47 @@
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.IspitniRok?.ID">Edit</a> |
     <a asp-page="./IspitniRokovi">Back to List</a>
+    <hr />
+</div>
+<div>
+    <br><br>
+    <h4>Prijave</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prijave[0].Student.Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prijave[0].Student.Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prijave[0].Ispit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prijave[0].IspitniRok)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Prijave)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ispit.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IspitniRok.Name)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

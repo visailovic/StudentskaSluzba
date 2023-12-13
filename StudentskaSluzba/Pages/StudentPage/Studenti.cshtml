@@ -11,17 +11,24 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<form method="post">
+    <input type="text" asp-for="SearchText">
+    <input type="submit" value="Search">
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Name)
+                @*@Html.DisplayNameFor(model => model.Student[0].Name)*@
+                <a class="btn-outline-dark" asp-page-handler="SortByName">Name</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Surname)
+                @*@Html.DisplayNameFor(model => model.Student[0].Surname)*@
+                <a class="btn-outline-dark" asp-page-handler="SortBySurname">Surname</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].DateOfBirth)
+                @*@Html.DisplayNameFor(model => model.Student[0].DateOfBirth)*@
+                <a class="btn-outline-dark" asp-page-handler="SortByDateOfBirth">Date of Birth</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].Image)

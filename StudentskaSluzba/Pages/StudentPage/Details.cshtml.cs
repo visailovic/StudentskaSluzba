@@ -19,7 +19,7 @@ namespace StudentskaSluzba.Pages.StudentPage
             _context = context;
         }
 
-      public Student Student { get; set; } = default!; 
+        public Student Student { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,7 +28,8 @@ namespace StudentskaSluzba.Pages.StudentPage
                 return NotFound();
             }
 
-            var student = await _context.Student.FirstOrDefaultAsync(m => m.ID == id);
+            var student = await _context.Student.Include(s => s.IspitnePrijave).FirstOrDefaultAsync(m => m.ID == id);
+            await _context.Prijava.Include(s => s.IspitniRok).Include(s => s.Ispit).Where(p => p.StudentID == student.ID).ToListAsync();
             if (student == null)
             {
                 return NotFound();

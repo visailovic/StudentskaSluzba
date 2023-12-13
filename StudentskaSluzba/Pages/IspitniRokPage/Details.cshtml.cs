@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DataBaseContext;
 using DatabaseEntityLib;
+using System.Collections.ObjectModel;
 
 namespace StudentskaSluzba.Pages.IspitniRokPage
 {
@@ -19,7 +20,8 @@ namespace StudentskaSluzba.Pages.IspitniRokPage
             _context = context;
         }
 
-        public IspitniRok IspitniRok { get; set; } = default!; 
+        public IspitniRok IspitniRok { get; set; } = default!;
+        public IList<Prijava> Prijave = new List<Prijava>();
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,7 +30,9 @@ namespace StudentskaSluzba.Pages.IspitniRokPage
                 return NotFound();
             }
 
-            var ispitnirok = await _context.IspitniRok.FirstOrDefaultAsync(m => m.ID == id);
+            var ispitnirok = await _context.IspitniRok.Include(r => r.IspitnePrijave).FirstOrDefaultAsync(m => m.ID == id);
+            var prijave = await _context.Prijava.Include(p => p.Student).Include(p => p.IspitniRok).Include(p => p.Ispit).Where(p => p.IspitniRokID == id).ToListAsync();
+
             if (ispitnirok == null)
             {
                 return NotFound();
@@ -36,6 +40,7 @@ namespace StudentskaSluzba.Pages.IspitniRokPage
             else 
             {
                 IspitniRok = ispitnirok;
+                Prijave = prijave;
             }
             return Page();
         }

@@ -42,3 +42,30 @@
     <a asp-page="./Edit" asp-route-id="@Model.Student?.ID">Edit</a> |
     <a asp-page="./Studenti">Back to List</a>
 </div>
+<br />
+<br />
+<div>
+    <h4>Prijave</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayName("Ispitni rok")
+        </dt>
+        <dt class="col-sm-10">
+            @Html.DisplayName("Ispit")
+        </dt>
+        <hr />
+        @foreach (var item in Model.Student.IspitnePrijave) {
+            <tr>
+                <dd class="col-sm-2">
+                    @Html.DisplayFor(modelItem => item.IspitniRok.Name)
+                </dd>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(modelItem => item.Ispit.Name)
+                </dd>
+            </tr>
+        }
+        <hr />
+        <a asp-page="..\PrijavaPage/Create">Create New</a>
+    </dl>
+</div>
